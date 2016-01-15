@@ -14,9 +14,11 @@ import javax.swing.JComboBox;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.PrintStream;
 
 import jssc.SerialPort;
 import jssc.SerialPortList;
+import javax.swing.JScrollPane;
 
 
 public class GUI extends JFrame {
@@ -48,6 +50,9 @@ public class GUI extends JFrame {
 		textArea_1.setEditable(false);
 		panel_1.add(textArea_1, BorderLayout.CENTER);
 		
+		PrintStream printStream = new PrintStream(new CustomOutputStream(textArea_1));
+		System.setOut(printStream);
+		System.setErr(printStream);
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.NORTH);

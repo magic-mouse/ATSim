@@ -26,7 +26,7 @@ public class Simulator implements Runnable {
 			sp.setParams(SerialPort.BAUDRATE_115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
 					SerialPort.PARITY_NONE);
 
-			Thread.sleep(2000);
+			//Thread.sleep(500);
 			
 			System.out.println("program =\r\n" + Program);
 			System.out.println("");
