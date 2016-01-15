@@ -21,6 +21,9 @@ import jssc.SerialPort;
 import jssc.SerialPortList;
 
 import javax.swing.JScrollPane;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 
 public class GUI extends JFrame {
@@ -66,6 +69,15 @@ public class GUI extends JFrame {
 		comboBox = new JComboBox(portNames);
 	
 		panel_2.add(comboBox, BorderLayout.CENTER);
+		
+		JMenuBar menuBar = new JMenuBar();
+		panel_2.add(menuBar, BorderLayout.NORTH);
+		
+		JMenu mnFiles = new JMenu("File");
+		menuBar.add(mnFiles);
+		
+		JMenuItem mntmOpen = new JMenuItem("Open");
+		mnFiles.add(mntmOpen);
 
 		
 		JButton btnNewButton = new JButton("Run simulation");
@@ -94,13 +106,12 @@ public class GUI extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		splitPane_1.setLeftComponent(scrollPane);
-		
-		scrollPane.getViewport().add(panel);
+		scrollPane.setViewportView(panel);
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
 		
 		splitPane_1.setRightComponent(scrollPane_1);
-		scrollPane_1.getViewport().add(panel_1);
+		scrollPane_1.setViewportView(panel_1);
 		getContentPane().add(splitPane_1, BorderLayout.CENTER);
 	}
 
