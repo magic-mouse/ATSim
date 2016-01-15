@@ -6,7 +6,7 @@ public class ATSimulator {
 	}
 
 	public static void main(String[] args) {
-		GUI g = new GUI();
+		GUI g = new GUI("AT Sim");
 		g.setVisible(true);
 	}
 

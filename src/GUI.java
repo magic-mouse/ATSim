@@ -29,16 +29,14 @@ public class GUI extends JFrame {
 	JTextArea textArea;
 	
 	public GUI() throws HeadlessException {
+		setup();
+	}
+
+	private void setup() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(640, 480);
-		
-		//JSplitPane splitPane = new JSplitPane();
-		//getContentPane().add(splitPane, BorderLayout.CENTER);
-		
-		//splitPane.setResizeWeight(0.5);
-		
+
 		JPanel panel = new JPanel();
-		//splitPane.setLeftComponent(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		textArea = new JTextArea();
@@ -108,17 +106,17 @@ public class GUI extends JFrame {
 
 	public GUI(GraphicsConfiguration arg0) {
 		super(arg0);
-		// TODO Auto-generated constructor stub
+		setup();
 	}
 
 	public GUI(String arg0) throws HeadlessException {
 		super(arg0);
-		// TODO Auto-generated constructor stub
+		setup();
 	}
 
 	public GUI(String arg0, GraphicsConfiguration arg1) {
 		super(arg0, arg1);
-		// TODO Auto-generated constructor stub
+		setup();
 	}
 
 }
