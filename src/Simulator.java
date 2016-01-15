@@ -48,14 +48,21 @@ public class Simulator implements Runnable {
 					}
 				} else {
 					boolean running = true;
+					int loop = 0;
 					String globalBuffer = null;
 					while (running) {
 						byte buffer[] = sp.readBytes();
 
 						if (buffer != null && buffer.length > 0) {
-							System.out.println(new String(buffer));
-							globalBuffer += new String(buffer);
-							if (globalBuffer.contains("\r\n")) {
+							loop = 0;
+							String add = new String(buffer);
+							globalBuffer += add;
+							System.out.println(add.replaceAll("\r\n\r\n", "\r\n"));
+							
+						}else{
+							Thread.sleep(100);
+							loop++;
+							if(loop == 10){
 								running = false;
 							}
 						}

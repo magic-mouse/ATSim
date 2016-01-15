@@ -25,7 +25,7 @@ public class GUI extends JFrame {
 	JTextArea textArea;
 	
 	public GUI() throws HeadlessException {
-		
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(640, 480);
 		
 		JSplitPane splitPane = new JSplitPane();
