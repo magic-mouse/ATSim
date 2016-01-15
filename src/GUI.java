@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 
@@ -18,6 +19,7 @@ import java.io.PrintStream;
 
 import jssc.SerialPort;
 import jssc.SerialPortList;
+
 import javax.swing.JScrollPane;
 
 
@@ -30,20 +32,20 @@ public class GUI extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(640, 480);
 		
-		JSplitPane splitPane = new JSplitPane();
-		getContentPane().add(splitPane, BorderLayout.CENTER);
+		//JSplitPane splitPane = new JSplitPane();
+		//getContentPane().add(splitPane, BorderLayout.CENTER);
 		
-		splitPane.setResizeWeight(0.5);
+		//splitPane.setResizeWeight(0.5);
 		
 		JPanel panel = new JPanel();
-		splitPane.setLeftComponent(panel);
+		//splitPane.setLeftComponent(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		textArea = new JTextArea();
 		panel.add(textArea, BorderLayout.CENTER);
 		
 		JPanel panel_1 = new JPanel();
-		splitPane.setRightComponent(panel_1);
+		//splitPane.setRightComponent(panel_1);
 		panel_1.setLayout(new BorderLayout(0, 0));
 		
 		JTextArea textArea_1 = new JTextArea();
@@ -85,8 +87,23 @@ public class GUI extends JFrame {
 			}
 		});
 		getContentPane().add(btnNewButton, BorderLayout.SOUTH);
-	
 		
+		JSplitPane splitPane_1 = new JSplitPane();
+		splitPane_1.setContinuousLayout(true);
+		splitPane_1.setResizeWeight(0.5);
+		
+		
+		
+		JScrollPane scrollPane = new JScrollPane();
+		splitPane_1.setLeftComponent(scrollPane);
+		
+		scrollPane.getViewport().add(panel);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		
+		splitPane_1.setRightComponent(scrollPane_1);
+		scrollPane_1.getViewport().add(panel_1);
+		getContentPane().add(splitPane_1, BorderLayout.CENTER);
 	}
 
 	public GUI(GraphicsConfiguration arg0) {
