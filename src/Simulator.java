@@ -26,56 +26,61 @@ public class Simulator implements Runnable {
 			sp.setParams(SerialPort.BAUDRATE_115200, SerialPort.DATABITS_8, SerialPort.STOPBITS_1,
 					SerialPort.PARITY_NONE);
 
-			//Thread.sleep(500);
-			
+			Thread.sleep(500);
+
 			System.out.println("program =\r\n" + Program);
 			System.out.println("");
 			for (String line : Program.split("\\n")) {
-				Thread.sleep(100);
-				String[] program = line.split(":");
 
-				System.out.println("Send: " + program[0]);
-				sp.writeBytes((program[0] + "\r\n").getBytes() );
-				// 
+				String program = line.trim();
 
-				if (program.length >= 2 && !program[1].equals("*")) {
-					System.out.println("Wait for: " + program[1]);
-					while (true) {
-						byte buffer[] = sp.readBytes();
-						System.out.println(new String(buffer));
+				if (program.isEmpty()){continue;}
+				if (program.startsWith("//")){continue;}
 
-						
+				System.out.println("Send: " + program);
+				sp.writeBytes((program + "\r\n").getBytes());
+				
+				
+				boolean running = true;
+				int loopCounter = 0;
+				while (running) {
+					if(sp == null)
+					{
+						throw new Exception("Serial port has exited prematurely");
 					}
-				} else {
-					boolean running = true;
-					int loop = 0;
-					String globalBuffer = null;
-					while (running) {
-						byte buffer[] = sp.readBytes();
-
-						if (buffer != null && buffer.length > 0) {
-							loop = 0;
-							String add = new String(buffer);
-							globalBuffer += add;
-							System.out.println(add.replaceAll("\r\n\r\n", "\r\n"));
+					
+					
+					byte[] byteBuffer = sp.readBytes(); 
+					if(byteBuffer != null  && byteBuffer.length > 0 ){
+						String bufferString = new String(byteBuffer);
+						//if (!bufferString.isEmpty()) {
+							if(loopCounter != 0){
+									System.out.println("");
+									loopCounter = 0;		
+							}
 							
-						}else{
+							System.out.println(bufferString.replaceAll("\r\n\r\n", "\r\n"));
+						/*} else {
+							System.out.println("Internally Sleeping 100 ms");
 							Thread.sleep(100);
-							loop++;
-							if(loop == 10){
+							loopCounter++;
+							if (loopCounter == 10) {
 								running = false;
 							}
+						}*/
+					}else{
+						System.out.print(".");
+						Thread.sleep(100);
+						loopCounter++;
+						if (loopCounter == 50) {
+							System.out.println("");
+							running = false;
 						}
-
 					}
+
 				}
-
 			}
-		} catch (
-
-		Exception e)
-
-		{
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally
 
@@ -84,8 +89,6 @@ public class Simulator implements Runnable {
 				System.out.println("Port Closed");
 				sp.closePort();
 			} catch (SerialPortException e) {
-				// TODO Auto-generated catch block
-
 				e.printStackTrace();
 			}
 		}

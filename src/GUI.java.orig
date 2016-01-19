@@ -117,6 +117,7 @@ public class GUI extends JFrame {
 		mnFiles.add(mntmOpen);
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
+<<<<<<< HEAD
 		mntmSave.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
@@ -132,6 +133,10 @@ public class GUI extends JFrame {
 						e.printStackTrace();
 					}
 				}	
+			}
+		});
+		mnFiles.add(mntmSave);
+=======
 		mnFiles.add(mntmSave);
 		
 		
@@ -146,10 +151,7 @@ public class GUI extends JFrame {
 			}
 		});
 		mnFiles.add(mntmClose);
-
-			}
-		});
-		mnFiles.add(mntmSave);
+>>>>>>> Home
 
 		
 		JButton btnNewButton = new JButton("Run simulation");
@@ -187,6 +189,7 @@ public class GUI extends JFrame {
 		getContentPane().add(splitPane_1, BorderLayout.CENTER);
 	}
 
+<<<<<<< HEAD
 	protected void loadFile(File file) {
 		FileReader fr;
 		try {
@@ -202,6 +205,7 @@ public class GUI extends JFrame {
 		
 	}
 
+=======
 	protected void exitProgram() {
 		System.exit(0);
 		this.dispose();
@@ -212,6 +216,7 @@ public class GUI extends JFrame {
 		h = new GUI("ATSim");
 	}
 	
+>>>>>>> Home
 	public GUI(GraphicsConfiguration arg0) {
 		super(arg0);
 		setup();
