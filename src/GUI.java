@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.PrintStream;
+import java.lang.annotation.Target;
 
 import jssc.SerialPort;
 import jssc.SerialPortList;
@@ -24,12 +25,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class GUI extends JFrame {
 
 	JComboBox comboBox;
 	JTextArea textArea;
+	Thread t;
 	
 	public GUI() throws HeadlessException {
 		setup();
@@ -53,9 +57,9 @@ public class GUI extends JFrame {
 		textArea_1.setEditable(false);
 		panel_1.add(textArea_1, BorderLayout.CENTER);
 		
-		PrintStream printStream = new PrintStream(new CustomOutputStream(textArea_1));
+/*		PrintStream printStream = new PrintStream(new CustomOutputStream(textArea_1));
 		System.setOut(printStream);
-		System.setErr(printStream);
+		System.setErr(printStream);*/
 		
 		JPanel panel_2 = new JPanel();
 		getContentPane().add(panel_2, BorderLayout.NORTH);
@@ -76,8 +80,33 @@ public class GUI extends JFrame {
 		JMenu mnFiles = new JMenu("File");
 		menuBar.add(mnFiles);
 		
+		JMenuItem mntmNew = new JMenuItem("New");
+		mntmNew.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				loadNew();
+			}
+		});
+		mnFiles.add(mntmNew);
+		
 		JMenuItem mntmOpen = new JMenuItem("Open");
 		mnFiles.add(mntmOpen);
+		
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mnFiles.add(mntmSave);
+		
+		
+		mnFiles.addSeparator();
+		
+		JMenuItem mntmClose = new JMenuItem("Close");
+		mntmClose.addMouseListener(new MouseAdapter() {
+	
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				exitProgram();
+			}
+		});
+		mnFiles.add(mntmClose);
 
 		
 		JButton btnNewButton = new JButton("Run simulation");
@@ -88,7 +117,7 @@ public class GUI extends JFrame {
 				s.Com = comboBox.getSelectedItem().toString();
 				s.Program = textArea.getText();
 				
-				Thread t = new Thread(s);
+				t = new Thread(s);
 				t.run();
 				
 				
@@ -115,6 +144,16 @@ public class GUI extends JFrame {
 		getContentPane().add(splitPane_1, BorderLayout.CENTER);
 	}
 
+	protected void exitProgram() {
+		System.exit(0);
+		this.dispose();
+	}
+
+	protected void loadNew(){
+		GUI h = (GUI)this;
+		h = new GUI("ATSim");
+	}
+	
 	public GUI(GraphicsConfiguration arg0) {
 		super(arg0);
 		setup();
