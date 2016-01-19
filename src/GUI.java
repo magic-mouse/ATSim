@@ -7,6 +7,7 @@ import javax.swing.JSplitPane;
 
 import java.awt.BorderLayout;
 
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
@@ -15,6 +16,11 @@ import javax.swing.JComboBox;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.PrintStream;
 
 import jssc.SerialPort;
@@ -24,6 +30,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class GUI extends JFrame {
@@ -77,6 +86,20 @@ public class GUI extends JFrame {
 		menuBar.add(mnFiles);
 		
 		JMenuItem mntmOpen = new JMenuItem("Open");
+		mntmOpen.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				
+				JFileChooser fileChooser = new JFileChooser();
+				if (fileChooser.showOpenDialog(getComponent(0)) == JFileChooser.APPROVE_OPTION) {
+				  File file = fileChooser.getSelectedFile();
+				 
+				  loadFile(file);
+				  
+				}
+				
+			}
+		});
 		mnFiles.add(mntmOpen);
 
 		
@@ -113,6 +136,21 @@ public class GUI extends JFrame {
 		splitPane_1.setRightComponent(scrollPane_1);
 		scrollPane_1.setViewportView(panel_1);
 		getContentPane().add(splitPane_1, BorderLayout.CENTER);
+	}
+
+	protected void loadFile(File file) {
+		FileReader fr;
+		try {
+			fr = new FileReader(file);
+			textArea.read(fr, file);
+		} catch (FileNotFoundException e) {
+
+			e.printStackTrace();
+		} catch (IOException e) {
+		
+			e.printStackTrace();
+		}
+		
 	}
 
 	public GUI(GraphicsConfiguration arg0) {
