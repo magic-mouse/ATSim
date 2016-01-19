@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
 
@@ -101,6 +102,26 @@ public class GUI extends JFrame {
 			}
 		});
 		mnFiles.add(mntmOpen);
+		
+		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser();
+					if (fileChooser.showSaveDialog(getComponent(0)) == JFileChooser.APPROVE_OPTION) {
+					 
+					  try {
+						  File file = fileChooser.getSelectedFile();
+						  FileWriter fw = new FileWriter(file.getAbsoluteFile(), true);
+						textArea.write(fw);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}	
+			}
+		});
+		mnFiles.add(mntmSave);
 
 		
 		JButton btnNewButton = new JButton("Run simulation");
